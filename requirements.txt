@@ -1,0 +1,24 @@
+# Core
+flask==3.0.0
+werkzeug==3.0.1
+
+# Numerical & ML
+numpy==1.26.4
+torch==2.0.1
+torchvision==0.15.2
+
+# Computer Vision
+opencv-python==4.9.0.80
+Pillow==10.2.0
+
+# File type detection
+filetype==1.2.0
+
+# HuggingFace (image deepfake detection)
+transformers==4.38.2
+huggingface-hub==0.21.4
+safetensors==0.4.2
+
+# Utilities
+tqdm==4.66.2
+requests==2.31.0

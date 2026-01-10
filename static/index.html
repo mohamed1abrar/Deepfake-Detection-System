@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Deepfake Detection</title>
+  <style>
+    body { background:#0d1117; color:#fff; font-family:sans-serif; padding:40px }
+    button { padding:10px 20px }
+    pre { background:#161b22; padding:20px }
+  </style>
+</head>
+<body>
+
+<h2>Deepfake Detection (FastAPI)</h2>
+
+<input type="file" id="file">
+<button onclick="send()">Analyze</button>
+
+<pre id="out"></pre>
+
+<script>
+async function send() {
+  const f = document.getElementById("file").files[0];
+  const fd = new FormData();
+  fd.append("file", f);
+
+  const res = await fetch("http://127.0.0.1:8000/analyze", {
+    method:"POST",
+    body:fd
+  });
+
+  document.getElementById("out").textContent =
+    JSON.stringify(await res.json(), null, 2);
+}
+</script>
+
+</body>
+</html>
