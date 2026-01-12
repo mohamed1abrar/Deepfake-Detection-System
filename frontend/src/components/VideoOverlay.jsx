@@ -1,22 +1,24 @@
 import { useEffect, useRef } from "react";
 
 export default function VideoOverlay({ videoUrl, frames }) {
-  const videoRef = useRef();
-  const canvasRef = useRef();
+  const videoRef = useRef(null);
+  const canvasRef = useRef(null);
 
   useEffect(() => {
     const video = videoRef.current;
     const canvas = canvasRef.current;
+    if (!video || !canvas) return;
+
     const ctx = canvas.getContext("2d");
 
     function draw() {
-      if (!video || video.paused || video.ended) return;
+      if (video.paused || video.ended) return;
 
       const t = video.currentTime;
       const fps = 25;
       const frameIndex = Math.floor(t * fps);
 
-      const frame = frames.find(f => f.frame === frameIndex);
+      const frame = frames?.find(f => f.frame === frameIndex);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       if (frame) {
@@ -39,8 +41,8 @@ export default function VideoOverlay({ videoUrl, frames }) {
       requestAnimationFrame(draw);
     }
 
-    video?.addEventListener("play", draw);
-    return () => video?.removeEventListener("play", draw);
+    video.addEventListener("play", draw);
+    return () => video.removeEventListener("play", draw);
   }, [frames]);
 
   return (
