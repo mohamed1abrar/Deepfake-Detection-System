@@ -22,7 +22,7 @@ import torch.nn as nn
 from PIL import Image as PILImage
 
 from fastapi import FastAPI, UploadFile, File, HTTPException
-from fastapi.responses import FileResponse
+from flask import send_from_directory
 from fastapi.staticfiles import StaticFiles
 from starlette.background import BackgroundTask
 from fastapi.middleware.cors import CORSMiddleware
@@ -670,21 +670,23 @@ def save_and_ensure_mp4(file_storage):
 # FastAPI routes (1:1 behavior)
 # -----------------------
 
-@app.get("/")
-def index():
-    # Serve static index.html exactly as before
-    index_path = os.path.join(PROJECT_ROOT, "static", "index.html")
-    if not os.path.exists(index_path):
-        raise HTTPException(status_code=404, detail="index.html not found")
-    return FileResponse(index_path, media_type="text/html")
 
-@app.get("/uploads/{filename:path}")
-def uploaded_file(filename: str):
-    safe_path = os.path.join(UPLOAD_FOLDER, filename)
-    if not os.path.exists(safe_path):
-        raise HTTPException(status_code=404)
-    mimetype = "video/mp4" if filename.lower().endswith(".mp4") else None
-    return FileResponse(safe_path, media_type=mimetype)
+@app.route("/", methods=["GET"])
+def health():
+    return jsonify({
+        "status": "ok",
+        "message": "Deepfake Detection Backend is running"
+    })
+
+
+@app.route("/uploads/<path:filename>")
+def serve_uploaded_file(filename):
+    return send_from_directory(
+        UPLOAD_FOLDER,
+        filename,
+        as_attachment=False
+    )
+
 
 @app.post("/api/analyze")
 def analyze():
