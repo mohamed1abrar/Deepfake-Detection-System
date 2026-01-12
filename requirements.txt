@@ -1,14 +1,20 @@
 # Core
 flask==3.0.0
+flask-cors==4.0.0
 werkzeug==3.0.1
+
+# API server
+fastapi==0.110.0
+uvicorn==0.27.1
+python-multipart==0.0.9
 
 # Numerical & ML
 numpy==1.26.4
 torch==2.0.1
 torchvision==0.15.2
 
-# Computer Vision
-opencv-python==4.9.0.80
+# Computer Vision (HEADLESS for cloud)
+opencv-python-headless==4.9.0.80
 Pillow==10.2.0
 
 # File type detection

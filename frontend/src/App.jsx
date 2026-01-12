@@ -44,7 +44,7 @@ export default function App() {
 
       {/* HERO */}
       <section className="hero">
-        <h1 className="glow-text">Deepfake Detection Platform</h1>
+        <h1 className="glow-text">Deepfake Detection System</h1>
         <p className="hero-desc">
           A premium AI-powered media forensics system designed to analyze images
           and videos for signs of manipulation using deep learning and computer
